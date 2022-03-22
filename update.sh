@@ -42,6 +42,8 @@ install_updatedkernel() {
     wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-image-unsigned-5.17.0-051700-generic_5.17.0-051700.202203202130_amd64.deb
     wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-modules-5.17.0-051700-generic_5.17.0-051700.202203202130_amd64.deb
     dpkg -i  *.deb
-    apt —fix-broken install
+    sudo apt --fix-broken install
+    sudo apt update
+    sudo apt upgrade
     print "You will need to reboot after the script finishes."
 }
