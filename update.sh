@@ -11,24 +11,6 @@
 #    sed -E 's/.*"([^"]+)".*/\1/'
 #}
 
-# OS Detection
-if [ -f /etc/os-release ]; then
-    . /etc/os-release
-    OS=$ID
-else
-    print "Unable to detect operating system."
-    exit 1
-fi
-
-# This script requires Ubuntu Rolling Remix to run since it uses a custom update manager.
-if [ "$OS" != "Ubuntu" ]; then
-    print "You must be on Ubuntu Rolling Remix to use this script."
-    exit 1
-fi
-
-# Switch to the user's home directory
-cd $HOME
-
 # Update system packages
 #install_newpackages() {
 #    sudo apt update
