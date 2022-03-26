@@ -5,3 +5,4 @@ This command-line utility is preferred over using `sudo apt update && sudo apt u
 
 #### Credits:
 - Created by: [Billy G](https://github.com/jbrgilbrech)
+- Some bug fixing by: [MrBeeBenson](https://mrbeebenson.github.io)
