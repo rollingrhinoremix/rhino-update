@@ -1,9 +1,9 @@
 #!/bin/bash
 # Created Billy G & MrBeeBenson
-# Created for Ubuntu Rolling Remix 
+# Created for Rhino Rolling Remix 
 
 # URLs
-# https://ubunturolling.github.io/
+# https://rollingrhinoremix.github.io/
 
 #get_latest_release() {
 #   curl --silent "https://api.github.com/repos/$1/releases/latest" |
