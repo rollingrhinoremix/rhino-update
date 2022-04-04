@@ -6,7 +6,7 @@
 # https://rollingrhinoremix.github.io/
 
 # Check to see whether the "configuration update", released in 2022.04.14 has been applied.
-if [ ! -f "$HOME/.rhino/updates/configuration" ]; then
+if [ ! -f "~/.rhino/updates/configuration" ]; then
   mkdir ~/.rhino
   mkdir ~/.rhino/config
   mkdir ~/.rhino/updates
@@ -15,7 +15,7 @@ if [ ! -f "$HOME/.rhino/updates/configuration" ]; then
 fi
 
 # If the user has selected the option to install the mainline kernel, install it onto the system.
-if [ -f "$HOME/.rhino/config/mainline" ]; then
+if [ -f "~/.rhino/config/mainline" ]; then
   cd ~/rhinoupdate/kernel/
   wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-headers-5.17.0-051700-generic_5.17.0-051700.202203202130_amd64.deb
   wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-headers-5.17.0-051700_5.17.0-051700.202203202130_all.deb
