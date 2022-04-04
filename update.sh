@@ -12,10 +12,10 @@
 #}
 
 #Check if Rhino update is configured. 
-if [ ! -f "$HOME/.rhino/updates/configuration" ]; then
+#if [ ! -f "$HOME/.rhino/updates/configuration" ]; then
  # Code will go here 
-  touch "$HOME/.rhino/updates/configuration"
-fi
+#  touch "$HOME/.rhino/updates/configuration"
+#fi
 
 # Perform system upgrade
 sudo apt update
