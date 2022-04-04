@@ -10,7 +10,7 @@ if [ ! -f "$HOME/.rhino/updates/configuration" ]; then
   mkdir ~/.rhino
   mkdir ~/.rhino/config
   mkdir ~/.rhino/updates
-  echo "alias alias rhino-config='mkdir ~/.rhino/config/config-script && git clone https://github.com/rollingrhinoremix/rhino-config ~/.rhino/config/config-script/ && sudo bash ~/.rhino/config/config-script/ && rm -rf ~/.rhino/config/config-script'" >> .bashrc
+  echo "alias rhino-config='mkdir ~/.rhino/config/config-script && git clone https://github.com/rollingrhinoremix/rhino-config ~/.rhino/config/config-script/ && python3 ~/.rhino/config/config-script/config.py && rm -rf ~/.rhino/config/config-script'" >> .bashrc
   touch "$HOME/.rhino/updates/configuration"
 fi
 
