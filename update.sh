@@ -5,10 +5,6 @@
 # URLs
 # https://rollingrhinoremix.github.io/
 
-# Due to current issues in rhino-update, the command will be removed from .bashrc and then readded when rhino-update is ran. This is due to an error created when the script is ran as sudo when it should not have been, issues have only arisen after if statements were created. 
-sed -i '/alias rhino-update"/d' ~/.bashrc
-echo "alias rhino-update='mkdir ~/rhinoupdate && mkdir ~/rhinoupdate/kernel && mkdir ~/rhinoupdate/script/ && git clone https://github.com/rollingrhinoremix/rhino-update ~/rhinoupdate/script && bash ~/rhinoupdate/script/update.sh && rm -rf ~/rhinoupdate'" >> ~/.bashrc
-
 # Check to see whether the "configuration update", released in 2022.04.14 has been applied.
 if [ ! -f "$HOME/.rhino/updates/configuration" ]; then
   mkdir ~/.rhino
