@@ -17,10 +17,10 @@ fi
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [ -f "$HOME/.rhino/config/mainline" ]; then
   cd ~/rhinoupdate/kernel/
-  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-headers-5.17.0-051700-generic_5.17.0-051700.202203202130_amd64.deb
-  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-headers-5.17.0-051700_5.17.0-051700.202203202130_all.deb
-  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-image-unsigned-5.17.0-051700-generic_5.17.0-051700.202203202130_amd64.deb
-  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-modules-5.17.0-051700-generic_5.17.0-051700.202203202130_amd64.deb
+  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.2/amd64/linux-headers-5.17.2-051702-generic_5.17.2-051702.202204081338_amd64.deb
+  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.2/amd64/linux-headers-5.17.2-051702_5.17.2-051702.202204081338_all.deb
+  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.2/amd64/linux-image-unsigned-5.17.2-051702-generic_5.17.2-051702.202204081338_amd64.deb 
+  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.2/amd64/linux-modules-5.17.2-051702-generic_5.17.2-051702.202204081338_amd64.deb
   sudo dpkg -i  *.deb
   sudo apt --fix-broken install
 fi
@@ -28,6 +28,7 @@ fi
 # Perform full system upgrade
 sudo apt update
 sudo apt-get dist-upgrade
+sudo snap refresh
 
 # Allow the user to know that the upgrade has completed
 echo "---"
