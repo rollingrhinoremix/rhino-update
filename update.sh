@@ -17,10 +17,10 @@ fi
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [ -f "$HOME/.rhino/config/mainline" ]; then
   cd ~/rhinoupdate/kernel/
-  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.3/amd64/linux-headers-5.17.3-051703-generic_5.17.3-051703.202204131853_amd64.deb
-  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.3/amd64/linux-headers-5.17.3-051703_5.17.3-051703.202204131853_all.deb
-  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.3/amd64/linux-image-unsigned-5.17.3-051703-generic_5.17.3-051703.202204131853_amd64.deb
-  wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.3/amd64/linux-modules-5.17.3-051703-generic_5.17.3-051703.202204131853_amd64.deb
+   wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-headers-5.17.0-051700-generic_5.17.0-051700.202203202130_amd64.deb
+   wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-headers-5.17.0-051700_5.17.0-051700.202203202130_all.deb
+   wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-image-unsigned-5.17.0-051700-generic_5.17.0-051700.202203202130_amd64.deb
+   wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17/amd64/linux-modules-5.17.0-051700-generic_5.17.0-051700.202203202130_amd64.deb
   sudo dpkg -i  *.deb
   sudo apt --fix-broken install
 fi
