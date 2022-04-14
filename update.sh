@@ -27,7 +27,8 @@ fi
 
 # Perform full system upgrade
 sudo apt update
-sudo apt dist-upgrade
+sudo apt-get dist-upgrade
+sudo snap refresh
 
 # Allow the user to know that the upgrade has completed
 echo "---"
