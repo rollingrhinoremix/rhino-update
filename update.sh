@@ -36,5 +36,5 @@ sudo apt dist-upgrade
 
 # Allow the user to know that the upgrade has completed.
 echo "---"
-echo "You will need to reboot after the script finishes."
+echo "The upgrade has been completed. Please reboot your system to see the changes."
 echo "---"
