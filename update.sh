@@ -26,7 +26,7 @@ if [ -f "$HOME/.rhino/config/mainline" ]; then
 fi
 
 # If snapd is installed.
-if [ ! -f "$HOME/.rhino/config/snapdpurge"]; then
+if [ ! -f "$HOME/.rhino/config/snapdpurge" ]; then
   sudo snap refresh
 fi
 
