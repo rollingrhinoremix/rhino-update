@@ -28,9 +28,9 @@ fi
 # Add Multiverse Repoistory
 sudo add-apt-repository multiverse
 sudo apt update
+
+# Install MS Core Fonts
 sudo apt install ttf-mscorefonts-installer
-
-
 
 # Perform full system upgrade
 sudo apt update
