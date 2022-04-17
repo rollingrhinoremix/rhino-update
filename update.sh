@@ -25,6 +25,13 @@ if [ -f "$HOME/.rhino/config/mainline" ]; then
   sudo apt --fix-broken install
 fi
 
+# Add Multiverse Repoistory
+sudo add-apt-repository multiverse
+sudo apt update
+sudo apt install ttf-mscorefonts-installer
+
+
+
 # Perform full system upgrade
 sudo apt update
 sudo apt-get dist-upgrade
