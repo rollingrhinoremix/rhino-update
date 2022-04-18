@@ -30,6 +30,17 @@ if [[ ! -f "$HOME/.rhino/config/snapdpurge" ]]; then
   sudo snap refresh
 fi
 
+
+# If Pacstall has been enabled
+if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
+  mkdir -p ~/rhinoupdate/pacstall/
+  cd ~/rhinoupdate/pacstall/
+  wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
+  sudo dpkg -i *.deb
+  sudo apt --fix-broken install
+  pacstall -Up
+fi
+
 # Perform full system upgrade.
 sudo apt update
 sudo apt dist-upgrade
