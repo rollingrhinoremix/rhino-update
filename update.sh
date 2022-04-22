@@ -25,9 +25,10 @@ fi
 
 # Install latest rhino-config utility
 mkdir ~/rhino-config
-git clone https://github.com/rollingrhinoremix/rhino-config ~/rhino-config
-chmod +x config.py
-sudo mv ~/rhino-config/config.py /usr/bin/rhino-config
+cd ~/rhino-config
+wget -q --show-progress --progress=bar:force # URL for Rust binary of rhino-config coming soon
+chmod +x rhino-config
+sudo mv rhino-config /usr/bin
 
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [[ -f "$HOME/.rhino/config/mainline" ]]; then
