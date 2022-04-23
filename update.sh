@@ -11,7 +11,7 @@ set -e
 if [[ ! -f "$HOME/.rhino/updates/configuration" ]]; then
   mkdir -p ~/.rhino/{config,updates}
   echo "alias rhino-config='mkdir ~/.rhino/config/config-script && git clone https://github.com/rollingrhinoremix/rhino-config ~/.rhino/config/config-script/ && python3 ~/.rhino/config/config-script/config.py && rm -rf ~/.rhino/config/config-script'" >> ~/.bashrc
-  touch "$HOME/.rhino/updates/configuration"
+  : > "$HOME/.rhino/updates/configuration"
 fi
 
 # If the user has selected the option to install the mainline kernel, install it onto the system.
