@@ -11,7 +11,7 @@ set -e
 if [[ ! -f "$HOME/.rhino/updates/configuration" ]]; then
   mkdir -p ~/.rhino/{config,updates}
   echo "alias rhino-config='mkdir ~/.rhino/config/config-script && git clone https://github.com/rollingrhinoremix/rhino-config ~/.rhino/config/config-script/ && python3 ~/.rhino/config/config-script/config.py && rm -rf ~/.rhino/config/config-script'" >> ~/.bashrc
-  touch "$HOME/.rhino/updates/configuration"
+  : > "$HOME/.rhino/updates/configuration"
 fi
 
 # Check to see whether the rhino-config v2 update has been applied, which converts Rhino into a command-line utility.
@@ -20,7 +20,7 @@ if [[ ! -f "$HOME/.rhino/updates/config-v2" ]]; then
   git clone https://github.com/rollingrhinoremix/distro ~/rhinoupdate/distro
   mv ~/rhinoupdate/distro/.bashrc ~
   mv ~/rhinoupdate/distro/.bash_aliases ~
-  touch "$HOME/.rhino/updates/config-v2"
+  : > "$HOME/.rhino/updates/config-v2"
 fi
 
 # Install latest rhino-config utility
