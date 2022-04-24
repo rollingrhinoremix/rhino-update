@@ -17,10 +17,10 @@ fi
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [[ -f "$HOME/.rhino/config/mainline" ]]; then
   cd ~/rhinoupdate/kernel/
-  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.3/amd64/linux-headers-5.17.3-051703-generic_5.17.3-051703.202204131853_amd64.deb
-  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.3/amd64/linux-headers-5.17.3-051703_5.17.3-051703.202204131853_all.deb
-  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.3/amd64/linux-image-unsigned-5.17.3-051703-generic_5.17.3-051703.202204131853_amd64.deb
-  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.3/amd64/linux-modules-5.17.3-051703-generic_5.17.3-051703.202204131853_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.4/amd64/linux-headers-5.17.4-051704-generic_5.17.4-051704.202204200842_amd64.deb
+  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.4/amd64/linux-headers-5.17.4-051704_5.17.4-051704.202204200842_all.deb
+  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.4/amd64/linux-image-unsigned-5.17.4-051704-generic_5.17.4-051704.202204200842_amd64.deb
+  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.4/amd64/linux-modules-5.17.4-051704-generic_5.17.4-051704.202204200842_amd64.deb
   sudo apt install ./*.deb
 fi
 
