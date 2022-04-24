@@ -56,8 +56,8 @@ if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
 fi
 
 # Perform full system upgrade.
-sudo apt update
-sudo apt dist-upgrade
+sudo apt update > /dev/null
+sudo apt dist-upgrade > /dev/null
 
 # Allow the user to know that the upgrade has completed.
 echo "---
