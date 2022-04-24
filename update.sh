@@ -18,8 +18,7 @@ fi
 if [[ ! -f "$HOME/.rhino/updates/config-v2" ]]; then
   mkdir ~/rhinoupdate/distro
   git clone https://github.com/rollingrhinoremix/distro ~/rhinoupdate/distro
-  mv ~/rhinoupdate/distro/.bashrc ~
-  mv ~/rhinoupdate/distro/.bash_aliases ~
+  mv ~/rhinoupdate/distro/.{bashrc,bash_aliases} ~
   : > "$HOME/.rhino/updates/config-v2"
 fi
 
