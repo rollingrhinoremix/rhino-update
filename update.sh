@@ -25,7 +25,7 @@ fi
 # Install latest rhino-config utility
 mkdir ~/rhino-config
 cd ~/rhino-config
-wget -q --show-progress --progress=bar:force # URL for Rust binary of rhino-config coming soon
+wget -q --show-progress --progress=bar:force https://github.com/rollingrhinoremix/rhino-config/releases/download/v2.0/rhino-config
 chmod +x rhino-config
 sudo mv rhino-config /usr/bin
 rm -rf ~/rhino-config
