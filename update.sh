@@ -28,6 +28,7 @@ cd ~/rhino-config
 wget -q --show-progress --progress=bar:force # URL for Rust binary of rhino-config coming soon
 chmod +x rhino-config
 sudo mv rhino-config /usr/bin
+rm -rf ~/rhino-config
 
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [[ -f "$HOME/.rhino/config/mainline" ]]; then
