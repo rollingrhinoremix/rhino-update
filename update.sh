@@ -62,7 +62,7 @@ fi
 # Ensure system files are kept up-to-date
 mkdir ~/rhinoupdate/system-files-update
 git clone https://github.com/rollingrhinoremix/distro ~/rhinoupdate/system-files-update
-cd ~/rhinoupdate/distro-update
+cd ~/rhinoupdate/system-files-update
 mv .bash_aliases ~
 sudo mv os-release /etc
 
