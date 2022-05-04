@@ -48,6 +48,7 @@ fi
 
 # If Pacstall has been enabled
 if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
+  echo "Pacstall has been disabled due to an issue with Ubuntu dependencies, and will be re-enabled at a later date."
   #mkdir -p ~/rhinoupdate/pacstall/
   #cd ~/rhinoupdate/pacstall/
   #wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
@@ -57,7 +58,6 @@ fi
 
 # Perform full system upgrade.
 { sudo apt update 2> /dev/null; sudo apt dist-upgrade 2> /dev/null; }
-echo "Pacstall has been disabled due to an issue with Ubuntu dependencies, and will be re-enabled at a later date."
 
 # Ensure system files are kept up-to-date
 mkdir ~/rhinoupdate/system-files-update
