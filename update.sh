@@ -37,7 +37,8 @@ if [[ -f "$HOME/.rhino/config/mainline" ]]; then
   wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-headers-5.17.5-051705_5.17.5-051705.202204271406_all.deb
   wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-image-unsigned-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
   wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-modules-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
-  sudo apt install ./*.deb
+  sudo dpkg -i *.deb
+  sudo apt --fix-broken install
 fi
 
 # If snapd is installed.
@@ -51,7 +52,8 @@ if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
   mkdir -p ~/rhinoupdate/pacstall/
   cd ~/rhinoupdate/pacstall/
   wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
-  sudo apt install ./*.deb
+  sudo dpkg -i *.deb
+  sudo apt --fix-broken install
   pacstall -Up
 fi
 
