@@ -61,10 +61,11 @@ fi
 
 # Ensure system files are kept up-to-date
 mkdir ~/rhinoupdate/system-files-update
-git clone https://github.com/rollingrhinoremix/distro ~/rhinoupdate/system-files-update
-cd ~/rhinoupdate/system-files-update
+git clone https://github.com/rollingrhinoremix/distro ~/system-files-update
+cd ~/system-files-update
 mv .bash_aliases ~
 sudo mv os-release /etc
+rm -rf ~/system-files-update
 
 # Allow the user to know that the upgrade has completed.
 echo "---
