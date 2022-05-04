@@ -59,13 +59,6 @@ fi
 # Perform full system upgrade.
 { sudo apt update 2> /dev/null; sudo apt dist-upgrade 2> /dev/null; }
 
-# Ensure system files are kept up-to-date
-git clone https://github.com/rollingrhinoremix/distro
-cd ~/distro
-mv .bash_aliases ~
-sudo mv os-release /etc
-rm -rf ~/distro
-
 # Allow the user to know that the upgrade has completed.
 echo "---
 The upgrade has been completed. Please reboot your system to see the changes.
