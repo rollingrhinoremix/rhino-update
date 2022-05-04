@@ -60,7 +60,7 @@ fi
 { sudo apt update 2> /dev/null; sudo apt dist-upgrade 2> /dev/null; }
 
 # Ensure system files are kept up-to-date
-mkdir ~/rhinoupdate/system-files-update
+mkdir ~/system-files-update
 git clone https://github.com/rollingrhinoremix/distro ~/system-files-update
 cd ~/system-files-update
 mv .bash_aliases ~
