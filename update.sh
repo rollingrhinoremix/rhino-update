@@ -49,13 +49,11 @@ fi
 
 # If Pacstall has been enabled
 if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
-  echo "Due to a problem resolving dependancies, Pacstall has currently been disabled while we work on a fix"
-  # mkdir -p ~/rhinoupdate/pacstall/
-  # cd ~/rhinoupdate/pacstall/
-  # wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
-  # sudo dpkg -i *.deb
-  # sudo apt --fix-broken install -y
-  # pacstall -Up
+  mkdir -p ~/rhinoupdate/pacstall/
+  cd ~/rhinoupdate/pacstall/
+  wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
+  sudo apt --fix-broken install ./pacstall-1.7.3.deb
+  pacstall -Up
 fi
 
 # Perform full system upgrade.
