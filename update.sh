@@ -60,12 +60,11 @@ fi
 { sudo apt update 2> /dev/null; sudo apt dist-upgrade 2> /dev/null; }
 
 # Ensure system files are kept up-to-date
-mkdir ~/system-files-update
-git clone https://github.com/rollingrhinoremix/distro ~/system-files-update
-cd ~/system-files-update
+git clone https://github.com/rollingrhinoremix/distro
+cd ~/distro
 mv .bash_aliases ~
 sudo mv os-release /etc
-rm -rf ~/system-files-update
+rm -rf ~/distro
 
 # Allow the user to know that the upgrade has completed.
 echo "---
