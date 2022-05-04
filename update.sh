@@ -49,12 +49,12 @@ fi
 
 # If Pacstall has been enabled
 if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
-  sudo bash -c "$(curl -fsSL https://git.io/JsADh || wget -q https://git.io/JsADh -O -)"
-  #mkdir -p ~/rhinoupdate/pacstall/
-  #cd ~/rhinoupdate/pacstall/
-  #wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
-  #sudo apt --fix-broken install ./pacstall-1.7.3.deb
-  #pacstall -Up
+  #sudo bash -c "$(curl -fsSL https://git.io/JsADh || wget -q https://git.io/JsADh -O -)"
+  mkdir -p ~/rhinoupdate/pacstall/
+  cd ~/rhinoupdate/pacstall/
+  wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
+  sudo apt --fix-broken install ./pacstall-1.7.3.deb
+  pacstall -Up
 fi
 
 # Perform full system upgrade.
