@@ -33,11 +33,20 @@ rm -rf ~/rhino-config
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [[ -f "$HOME/.rhino/config/mainline" ]]; then
   cd ~/rhinoupdate/kernel/
+
+  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/CHECKSUMS
   wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-headers-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
   wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-headers-5.17.5-051705_5.17.5-051705.202204271406_all.deb
   wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-image-unsigned-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
   wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-modules-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
-  sudo apt install ./*.deb
+
+  echo "Verifying checksums..."
+  if shasum --check CHECKSUMS; then
+    sudo apt install ./*.deb
+  else
+    >&2 echo "Failed to verify checksums of downloaded kernel files!"
+    exit 1
+  fi
 fi
 
 # If snapd is installed.
