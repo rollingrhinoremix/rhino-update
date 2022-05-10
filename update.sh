@@ -64,4 +64,5 @@ fi
 
 # Allow the user to know that the upgrade has completed.
 echo "---
-The upgrade has been completed. Please reboot your system to see the changes.---"
+The upgrade has been completed. Please reboot your system to see the changes.
+---"
