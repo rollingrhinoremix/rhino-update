@@ -31,22 +31,21 @@ sudo mv rhino-config /usr/bin
 rm -rf ~/rhino-config
 
 # If the user has selected the option to install the mainline kernel, install it onto the system.
-if [[ -f "$HOME/.rhino/config/mainline" ]]; then
-  cd ~/rhinoupdate/kernel/
-
-  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/CHECKSUMS
-  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-headers-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
-  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-headers-5.17.5-051705_5.17.5-051705.202204271406_all.deb
-  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-image-unsigned-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
-  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-modules-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
-
-  echo "Verifying checksums..."
-  if shasum --check CHECKSUMS; then
-    sudo apt install ./*.deb
-  else
-    >&2 echo "Failed to verify checksums of downloaded kernel files!"
-    exit 1
-  fi
+if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-17-5" ]]; then
+    cd ~/rhinoupdate/kernel/
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-headers-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-headers-5.17.5-051705_5.17.5-051705.202204271406_all.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-image-unsigned-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-modules-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
+    
+    echo "Verifying checksums..."
+    if shasum --check CHECKSUMS; then
+      sudo apt install ./*.deb
+      : > "$HOME/.rhino/config/5-17-5"
+    else
+      >&2 echo "Failed to verify checksums of downloaded kernel files!"
+      exit 1
+    fi
 fi
 
 # If snapd is installed.
@@ -57,12 +56,19 @@ fi
 
 # If Pacstall has been enabled
 if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
-  echo "Pacstall has been disabled due to an issue with Ubuntu dependencies, and will be re-enabled at a later date."
-  #mkdir -p ~/rhinoupdate/pacstall/
-  #cd ~/rhinoupdate/pacstall/
-  #wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
-  #sudo apt install ./*.deb
-  #pacstall -Up
+# Check to see whether an issue in Curl has been fixed
+  if [[ ! -f "$HOME/.rhino/config/curl-fix" ]]; then
+    sudo apt remove libcurl4 -y
+    sudo apt autoremove -y 
+    sudo apt install libcurl4 curl -y
+    : > "$HOME/.rhino/config/curl-fix"
+  fi
+  # Install Pacstall
+  mkdir -p ~/rhinoupdate/pacstall/
+  cd ~/rhinoupdate/pacstall/
+  wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
+  sudo apt install ./*.deb
+  pacstall -Up
 fi
 
 # Perform full system upgrade.
