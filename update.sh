@@ -40,7 +40,6 @@ if [[ -f "$HOME/.rhino/config/mainline" ]]; then
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.7/amd64/linux-modules-5.17.7-051707-generic_5.17.7-051707.202205121146_amd64.deb
     sudo apt install ./*.deb
     : > "$HOME/.rhino/config/5-17-7"
-    : > "$HOME/.rhino/config/5-17-7"
   fi
 fi
 
