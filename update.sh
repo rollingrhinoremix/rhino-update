@@ -32,14 +32,15 @@ rm -rf ~/rhino-config
 
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [[ -f "$HOME/.rhino/config/mainline" ]]; then
-  if [[ ! -f "$HOME/.rhino/config/5-17-7" ]]; then
+  if [[ ! -f "$HOME/.rhino/config/5-17-8" ]]; then
     cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.7/amd64/linux-headers-5.17.7-051707-generic_5.17.7-051707.202205121146_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.7/amd64/linux-headers-5.17.7-051707_5.17.7-051707.202205121146_all.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.7/amd64/linux-image-unsigned-5.17.7-051707-generic_5.17.7-051707.202205121146_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.7/amd64/linux-modules-5.17.7-051707-generic_5.17.7-051707.202205121146_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.8/amd64/linux-headers-5.17.8-051708-generic_5.17.8-051708.202205151940_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.8/amd64/linux-headers-5.17.8-051708_5.17.8-051708.202205151940_all.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.8/amd64/linux-image-unsigned-5.17.8-051708-generic_5.17.8-051708.202205151940_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.8/amd64/linux-modules-5.17.8-051708-generic_5.17.8-051708.202205151940_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.8/amd64/linux-modules-iwlwifi-5.17.8-051708-generic_5.17.8-051708.202205151940_amd64.deb
     sudo apt install ./*.deb
-    : > "$HOME/.rhino/config/5-17-7"
+    : > "$HOME/.rhino/config/5-17-8"
   fi
 fi
 
