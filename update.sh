@@ -1,6 +1,6 @@
 #!/bin/bash
 # Created by Billy G & MrBeeBenson
-# Created for Rhino Rolling Remix 
+# Created for Rhino Rolling Remix
 
 # URLs
 # https://rollingrhino.org
@@ -44,17 +44,14 @@ if [[ -f "$HOME/.rhino/config/mainline" ]]; then
 fi
 
 # If snapd is installed.
-if [[ ! -f "$HOME/.rhino/config/snapdpurge" ]]; then
-  sudo snap refresh
-fi
-
+[[ -f "$HOME/.rhino/config/snapdpurge" ]] || sudo snap refresh
 
 # If Pacstall has been enabled
 if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
 # Check to see whether an issue in Curl has been fixed
   if [[ ! -f "$HOME/.rhino/config/curl-fix" ]]; then
     sudo apt remove libcurl4 -y
-    sudo apt autoremove -y 
+    sudo apt autoremove -y
     sudo apt install libcurl4 curl -y
     : > "$HOME/.rhino/config/curl-fix"
   fi
