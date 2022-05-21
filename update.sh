@@ -70,6 +70,8 @@ fi
 { sudo apt update; sudo apt dist-upgrade; } 2>&-
 
 # Allow the user to know that the upgrade has completed.
-echo "---
+cat << MSG
+---
 The upgrade has been completed. Please reboot your system to see the changes.
----"
+----
+MSG
