@@ -16,7 +16,6 @@ fi
 
 # Check to see whether the rhino-config v2 update has been applied, which converts Rhino into a command-line utility.
 if [[ ! -f "$HOME/.rhino/updates/config-v2" ]]; then
-  mkdir ~/rhinoupdate/distro
   git clone https://github.com/rollingrhinoremix/distro ~/rhinoupdate/distro
   mv ~/rhinoupdate/distro/.{bashrc,bash_aliases} ~
   : > "$HOME/.rhino/updates/config-v2"
