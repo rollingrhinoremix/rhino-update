@@ -32,14 +32,14 @@ rm -rf ~/rhino-config
 
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [[ -f "$HOME/.rhino/config/mainline" ]]; then
-   if [[ ! -f "$HOME/.rhino/config/5-17-7" ]]; then
+  if [[ ! -f "$HOME/.rhino/config/5-17-9" ]]; then
     cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.7/amd64/linux-headers-5.17.7-051707-generic_5.17.7-051707.202205121146_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.7/amd64/linux-headers-5.17.7-051707_5.17.7-051707.202205121146_all.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.7/amd64/linux-image-unsigned-5.17.7-051707-generic_5.17.7-051707.202205121146_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.7/amd64/linux-modules-5.17.7-051707-generic_5.17.7-051707.202205121146_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-headers-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-headers-5.17.9-051709_5.17.9-051709.202205180947_all.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-image-unsigned-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-modules-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb
     sudo apt install ./*.deb
-    : > "$HOME/.rhino/config/5-17-7"
+    : > "$HOME/.rhino/config/5-17-9"
   fi
 fi
 
