@@ -1,9 +1,9 @@
 #!/bin/bash
-# Created Billy G & MrBeeBenson
+# Created by Billy G & MrBeeBenson
 # Created for Rhino Rolling Remix 
 
 # URLs
-# https://rollingrhinoremix.github.io/
+# https://rollingrhino.org
 
 set -e
 
@@ -31,17 +31,18 @@ sudo mv rhino-config /usr/bin
 rm -rf ~/rhino-config
 
 # If the user has selected the option to install the mainline kernel, install it onto the system.
-if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-17-5" ]]; then
+if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-17-9" ]]; then
     cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-headers-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-headers-5.17.5-051705_5.17.5-051705.202204271406_all.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-image-unsigned-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.5/amd64/linux-modules-5.17.5-051705-generic_5.17.5-051705.202204271406_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/CHECKSUMS
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-headers-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-headers-5.17.9-051709_5.17.9-051709.202205180947_all.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-image-unsigned-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-modules-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb
     
     echo "Verifying checksums..."
     if shasum --check CHECKSUMS; then
       sudo apt install ./*.deb
-      : > "$HOME/.rhino/config/5-17-5"
+      : > "$HOME/.rhino/config/5-17-9"
     else
       >&2 echo "Failed to verify checksums of downloaded kernel files!"
       exit 1
