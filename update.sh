@@ -31,15 +31,21 @@ sudo mv rhino-config /usr/bin
 rm -rf ~/rhino-config
 
 # If the user has selected the option to install the mainline kernel, install it onto the system.
-if [[ -f "$HOME/.rhino/config/mainline" ]]; then
-  if [[ ! -f "$HOME/.rhino/config/5-17-9" ]]; then
+if [[ -f "$HOME/.rhino/config/mainline" ]]; then && if [[ ! -f "$HOME/.rhino/config/5-17-9" ]]; then
     cd ~/rhinoupdate/kernel/
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-headers-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-headers-5.17.9-051709_5.17.9-051709.202205180947_all.deb
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-image-unsigned-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-modules-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb
-    sudo apt install ./*.deb
-    : > "$HOME/.rhino/config/5-17-9"
+    
+    echo "Verifying checksums..." #Who needs a file to verify?
+    if echo -e '8c2aae4597e2bec13a02b6f48aaa5b33215b391826c21fa25fdaed8f3830b5f0  linux-headers-5.17.9-051709_5.17.9-051709.202205180947_all.deb\n875726cff8d56cb8153af4e3f95e7e77d19c995218a19ed38807ad3947dcd916  linux-headers-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb\n06072f87982e5731300773ac2bda69e9e74d3af8378116d7cd9217c9811892cd  linux-image-unsigned-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb\na7def9841f6786db7c770f6601d405ad179c205b8c5e5302470699afcac37845  linux-modules-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb' | sha256sum --check --status; then
+      sudo apt install ./*.deb
+      : > "$HOME/.rhino/config/5-17-9"
+    else
+      >&2 echo "Failed to verify checksums of downloaded kernel files!"
+      exit 1
+    fi
   fi
 fi
 
