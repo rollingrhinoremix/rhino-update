@@ -40,7 +40,7 @@ if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-17-
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.17.9/amd64/linux-modules-5.17.9-051709-generic_5.17.9-051709.202205180947_amd64.deb
     
     echo "Verifying checksums..."
-    if shasum --check CHECKSUMS; then
+    if shasum --check --ignore-missing CHECKSUMS; then
       sudo apt install ./*.deb
       : > "$HOME/.rhino/config/5-17-9"
     else
