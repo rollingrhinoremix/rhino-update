@@ -69,7 +69,9 @@ if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
   cd ~/rhinoupdate/pacstall/
   wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
   sudo apt install ./*.deb
-  pacstall -Up
+  if [[ ! $EUID -eq 0 ]]; then
+	  pacstall -Up
+  fi
 fi
 
 # Perform full system upgrade.
