@@ -70,7 +70,7 @@ if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
   wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
   sudo apt install ./*.deb
   if [[ ! $EUID -eq 0 ]]; then
-	  pacstall -Up
+    pacstall -Up
   fi
 fi
 
