@@ -54,6 +54,10 @@ if [[ ! -f "$HOME/.rhino/config/snapdpurge" ]]; then
   sudo snap refresh
 fi
 
+# If flatpak is installed
+if [[ -f "/usr/bin/flatpak" ]]; then
+  flatpak update
+fi
 
 # If Pacstall has been enabled
 if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
