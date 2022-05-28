@@ -30,6 +30,13 @@ chmod +x rhino-config
 sudo mv rhino-config /usr/bin
 rm -rf ~/rhino-config
 
+# Install the latest rhino-deinst utility
+mkdir ~/rhinoupdate/rhino-deinst
+cd ~/rhinoupdate/rhino-deinst
+wget -q --show-progress --progress=bar:force https://github.com/rollingrhinoremix/rhino-deinst/releases/latest/download/rhino-deinst
+chmod +x rhino-deinst
+sudo mv rhino-deinst /usr/bin
+
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-18-0" ]]; then
     cd ~/rhinoupdate/kernel/
@@ -73,6 +80,13 @@ fi
 
 # Perform full system upgrade.
 { sudo apt update 2> /dev/null; sudo apt dist-upgrade 2> /dev/null; }
+
+# Install/Fix system files such as /etc/os-release
+cd ~
+mkdir ~/rhinoupdate/system-files/
+git clone https://github.com/rollingrhinoremix/assets ~/rhinoupdate/system-files/
+sudo rm -rf /etc/os-release
+sudo mv ~/rhinoupdate/system-files/os-release /etc/
 
 # Allow the user to know that the upgrade has completed.
 echo "---
