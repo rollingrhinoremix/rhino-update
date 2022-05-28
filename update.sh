@@ -25,7 +25,7 @@ fi
 # Install latest rhino-config utility
 mkdir /usr/share/rhino/rhino-config
 cd /usr/share/rhino/rhino-config
-wget -q --show-progress --progress=bar:force https://github.com/rollingrhinoremix/rhino-config/releases/download/v2.0.1/rhino-config
+wget -q --show-progress --progress=bar:force https://github.com/rollingrhinoremix/rhino-config/releases/latest/download/rhino-config
 chmod +x rhino-config
 sudo mv rhino-config /usr/bin
 rm -rf /usr/share/rhino/rhino-config
@@ -58,26 +58,25 @@ if [[ -f "/usr/share/rhino/config/mainline" ]] && [[ ! -f "/usr/share/rhino/conf
 fi
 
 # If snapd is installed.
-if [[ ! -f "/usr/share/rhino/config/snapdpurge" ]]; then
+if [[ -f "/usr/bin/snap" ]]; then
   sudo snap refresh
 fi
 
+# If flatpak is installed
+if [[ -f "/usr/bin/flatpak" ]]; then
+  flatpak update
+fi
 
 # If Pacstall has been enabled
 if [[ -f "/usr/share/rhino/config/pacstall" ]]; then
-# Check to see whether an issue in Curl has been fixed
-  if [[ ! -f "/usr/share/rhino/config/curl-fix" ]]; then
-    sudo apt remove libcurl4 -y
-    sudo apt autoremove -y 
-    sudo apt install libcurl4 curl -y
-    : > "/usr/share/rhino/config/curl-fix"
-  fi
   # Install Pacstall
   mkdir -p /usr/share/rhino/rhinoupdate/pacstall/
   cd /usr/share/rhino/rhinoupdate/pacstall/
   wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
   sudo apt install ./*.deb
-  pacstall -Up
+  if [[ ! $EUID -eq 0 ]]; then
+    pacstall -Up
+  fi
 fi
 
 chmod -R 775 /usr/share/rhino
