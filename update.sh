@@ -30,14 +30,6 @@ chmod +x rhino-config
 sudo mv rhino-config /usr/bin
 rm -rf /usr/share/rhino/rhino-config
 
-# Install latest rhino-deinst utility
-mkdir /usr/share/rhino/rhino-deinst
-cd /usr/share/rhino/rhino-deinst
-wget -q --show-progress --progress=bar:force https://github.com/rollingrhinoremix/rhino-deinst/releases/latest/download/rhino-deinst
-chmod +x rhino-deinst
-sudo mv rhino-deinst /usr/bin
-rm -rf /usr/share/rhino/rhino-deinst
-
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [[ -f "/usr/share/rhino/config/mainline" ]] && [[ ! -f "/usr/share/rhino/config/5-18-0" ]]; then
     cd /usr/share//rhinoupdate/kernel/
