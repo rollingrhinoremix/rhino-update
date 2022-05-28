@@ -31,8 +31,8 @@ sudo mv rhino-config /usr/bin
 rm -rf /usr/share/rhino/rhino-config
 
 # Install the latest rhino-deinst utility
-mkdir ~/rhinoupdate/rhino-deinst
-cd ~/rhinoupdate/rhino-deinst
+mkdir /usr/share/rhino/rhinoupdate/rhino-deinst
+cd /usr/share/rhino/rhinoupdate/rhino-deinst
 wget -q --show-progress --progress=bar:force https://github.com/rollingrhinoremix/rhino-deinst/releases/latest/download/rhino-deinst
 chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
@@ -84,11 +84,11 @@ chmod -R 775 /usr/share/rhino
 { sudo apt update 2> /dev/null; sudo apt dist-upgrade 2> /dev/null; }
 
 # Install/Fix system files such as /etc/os-release
-cd ~
-mkdir ~/rhinoupdate/system-files/
-git clone https://github.com/rollingrhinoremix/assets ~/rhinoupdate/system-files/
+cd /usr/share/rhino
+mkdir /usr/share/rhino/rhinoupdate/system-files/
+git clone https://github.com/rollingrhinoremix/assets /usr/share/rhino/rhinoupdate/system-files/
 sudo rm -rf /etc/os-release
-sudo mv ~/rhinoupdate/system-files/os-release /etc/
+sudo mv /usr/share/rhino/rhinoupdate/system-files/os-release /etc/
 
 # Allow the user to know that the upgrade has completed.
 echo "---
