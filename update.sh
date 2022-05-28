@@ -50,7 +50,7 @@ if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-18-
 fi
 
 # If snapd is installed.
-if [[ ! -f "$HOME/.rhino/config/snapdpurge" ]]; then
+if [[ -f "/usr/bin/snap" ]]; then
   sudo snap refresh
 fi
 
