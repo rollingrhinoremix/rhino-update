@@ -86,8 +86,6 @@ if [[ -f "/usr/share/rhino/config/pacstall" ]]; then
   fi
 fi
 
-chmod -R 775 /usr/share/rhino
-
 # Perform full system upgrade.
 { sudo apt update 2> /dev/null; sudo apt dist-upgrade 2> /dev/null; }
 
@@ -97,6 +95,7 @@ mkdir /usr/share/rhino/rhinoupdate/system-files/
 git clone https://github.com/rollingrhinoremix/assets /usr/share/rhino/rhinoupdate/system-files/
 sudo rm -rf /etc/os-release
 sudo mv /usr/share/rhino/rhinoupdate/system-files/os-release /etc/
+chmod -R 775 /usr/share/rhino # In case this was ran with root - for regular users
 
 # Allow the user to know that the upgrade has completed.
 echo "---
