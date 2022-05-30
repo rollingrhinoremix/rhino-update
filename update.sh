@@ -7,6 +7,14 @@
 
 set -e
 
+# Check whether there is a newer version of this script
+cd /usr/rhino/rhino-updater
+if /usr/bin/git pull; then
+    chmod +x /usr/rhino/rhino-updater/update.sh
+    exec /usr/bin/rhino-update
+    exit $?
+fi
+
 # Check to see whether the "configuration update", released in 2022.04.19 has been applied.
 if [[ ! -f "/usr/share/rhino/updates/configuration" ]]; then
   mkdir -p /usr/share/rhino/{config,updates}
