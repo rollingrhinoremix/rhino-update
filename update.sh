@@ -47,7 +47,7 @@ sudo mv rhino-deinst /usr/bin
 
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [[ -f "/usr/share/rhino/config/mainline" ]] && [[ ! -f "/usr/share/rhino/config/5-18-0" ]]; then
-    cd /usr/share//rhinoupdate/kernel/
+    cd /usr/share/rhinoupdate/kernel/
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/CHECKSUMS
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-headers-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-headers-5.18.0-051800_5.18.0-051800.202205222030_all.deb
