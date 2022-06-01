@@ -37,23 +37,22 @@ wget -q --show-progress --progress=bar:force https://github.com/rollingrhinoremi
 chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
 
-# If the user has selected the option to install the mainline kernel, install it onto the system.
-if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-18-0" ]]; then
-    cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/CHECKSUMS
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-headers-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-headers-5.18.0-051800_5.18.0-051800.202205222030_all.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-image-unsigned-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-modules-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
+# Install the latest linux kernel onto the system if it has not been installed.
+if [[ ! -f "$HOME/.rhino/config/5-18-0" ]]; then
+  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/CHECKSUMS
+  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-headers-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
+  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-headers-5.18.0-051800_5.18.0-051800.202205222030_all.deb
+  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-image-unsigned-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
+  wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-modules-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
     
-    echo "Verifying checksums..."
-    if shasum --check --ignore-missing CHECKSUMS; then
-      sudo apt install ./*.deb
-      : > "$HOME/.rhino/config/5-18-0"
-    else
-      >&2 echo "Failed to verify checksums of downloaded kernel files!"
-      exit 1
-    fi
+  echo "Verifying checksums..."
+  if shasum --check --ignore-missing CHECKSUMS; then
+    sudo apt install ./*.deb
+    : > "$HOME/.rhino/config/5-18-0"
+  else
+    >&2 echo "Failed to verify checksums of downloaded kernel files!"
+    exit 1
+  fi
 fi
 
 # If snapd is installed.
