@@ -38,13 +38,13 @@ chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
 
 # If the user has selected the option to install the mainline kernel, install it onto the system.
-if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-18-0" ]]; then
+if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-18-2" ]]; then
     cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/CHECKSUMS
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-headers-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-headers-5.18.0-051800_5.18.0-051800.202205222030_all.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-image-unsigned-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-modules-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/CHECKSUMS
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-headers-5.18.2-051802-generic_5.18.2-051802.202206060740_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-headers-5.18.2-051802_5.18.2-051802.202206060740_all.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-image-unsigned-5.18.2-051802-generic_5.18.2-051802.202206060740_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-modules-5.18.2-051802-generic_5.18.2-051802.202206060740_amd64.deb
     
     echo "Verifying checksums..."
     if shasum --check --ignore-missing CHECKSUMS; then
