@@ -85,8 +85,7 @@ fi
 cd ~
 mkdir ~/rhinoupdate/system-files/
 git clone https://github.com/rollingrhinoremix/assets ~/rhinoupdate/system-files/
-sudo rm -rf /etc/os-release
-sudo mv ~/rhinoupdate/system-files/os-release /etc/
+sudo mv ~/rhinoupdate/system-files/os-release /usr/lib/
 
 # Allow the user to know that the upgrade has completed.
 echo "---
