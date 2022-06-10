@@ -48,16 +48,17 @@ sudo mv rhino-deinst /usr/bin
 # If the user has selected the option to install the mainline kernel, install it onto the system.
 if [[ -f "/usr/share/rhino/config/mainline" ]] && [[ ! -f "/usr/share/rhino/config/5-18-0" ]]; then
     cd /usr/share/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/CHECKSUMS
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-headers-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-headers-5.18.0-051800_5.18.0-051800.202205222030_all.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-image-unsigned-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18/amd64/linux-modules-5.18.0-051800-generic_5.18.0-051800.202205222030_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/CHECKSUMS
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-headers-5.18.2-051802-generic_5.18.2-051802.202206060740_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-headers-5.18.2-051802_5.18.2-051802.202206060740_all.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-image-unsigned-5.18.2-051802-generic_5.18.2-051802.202206060740_amd64.deb
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-modules-5.18.2-051802-generic_5.18.2-051802.202206060740_amd64.deb
     
     echo "Verifying checksums..."
     if shasum --check --ignore-missing CHECKSUMS; then
       sudo apt install ./*.deb
       : > "/usr/share/rhino/config/5-18-0"
+      : > "/usr/share/rhino/config/5-18-2"
     else
       >&2 echo "Failed to verify checksums of downloaded kernel files!"
       exit 1
@@ -93,9 +94,7 @@ fi
 cd /usr/share/rhino
 mkdir /usr/share/rhino/rhinoupdate/system-files/
 git clone https://github.com/rollingrhinoremix/assets /usr/share/rhino/rhinoupdate/system-files/
-sudo rm -rf /etc/os-release
-sudo mv /usr/share/rhino/rhinoupdate/system-files/os-release /etc/
-chmod -R 775 /usr/share/rhino # In case this was ran with root - for regular users
+sudo mv /usr/share/rhino/rhinoupdate/system-files/os-release /usr/lib/
 
 # Allow the user to know that the upgrade has completed.
 echo "---
