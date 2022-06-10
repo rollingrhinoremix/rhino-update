@@ -37,8 +37,8 @@ wget -q --show-progress --progress=bar:force https://github.com/rollingrhinoremi
 chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
 
-# If the user has selected the option to install the mainline kernel, install it onto the system.
-if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-18-2" ]]; then
+# Automatically install the latest Linux kernel onto the system if it has not been installed already.
+if [[ ! -f "$HOME/.rhino/config/5-18-2" ]]; then
     cd ~/rhinoupdate/kernel/
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/CHECKSUMS
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-headers-5.18.2-051802-generic_5.18.2-051802.202206060740_amd64.deb
@@ -56,12 +56,25 @@ if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-18-
     fi
 fi
 
-# If snapd is installed.
+# If the user has enabled the xanmod kernel via rhino-config, install it.
+if [[ -f "$HOME/.rhino/config/xanmod" ]]; then
+    echo 'deb http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-kernel.list
+    wget -qO - https://dl.xanmod.org/gpg.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/xanmod-kernel.gpg add -
+    sudo apt update && sudo apt install linux-xanmod
+fi
+
+# If the user has enabled the liq kernel via rhino-config, install it.
+if [[ -f "$HOME/.rhino/config/liquorix" ]]; then
+   sudo add-apt-repository ppa:damentz/liquorix && sudo apt-get update
+   sudo apt install linux-image-liquorix-amd64 linux-headers-liquorix-amd64
+fi
+
+# If snapd is installed, update apps.
 if [[ -f "/usr/bin/snap" ]]; then
   sudo snap refresh
 fi
 
-# If flatpak is installed
+# If flatpak is installed, update apps.
 if [[ -f "/usr/bin/flatpak" ]]; then
   flatpak update
 fi
