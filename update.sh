@@ -56,6 +56,17 @@ if [[ -f "$HOME/.rhino/config/mainline" ]] && [[ ! -f "$HOME/.rhino/config/5-18-
     fi
 fi
 
+if [[ -f "$HOME/.rhino/config/xanmod" ]]; then
+    echo 'deb http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-kernel.list
+    wget -qO - https://dl.xanmod.org/gpg.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/xanmod-kernel.gpg add -
+    sudo apt update && sudo apt install linux-xanmod
+fi
+
+if [[ -f "$HOME/.rhino/config/liquorix" ]]; then
+   sudo add-apt-repository ppa:damentz/liquorix && sudo apt-get update
+   sudo apt install linux-image-liquorix-amd64 linux-headers-liquorix-amd64
+fi
+
 # If snapd is installed.
 if [[ -f "/usr/bin/snap" ]]; then
   sudo snap refresh
