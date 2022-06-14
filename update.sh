@@ -22,6 +22,12 @@ if [[ ! -f "$HOME/.rhino/updates/config-v2" ]]; then
   : > "$HOME/.rhino/updates/config-v2"
 fi
 
+# Check to see whether Nala is installed.
+if [[ ! -f "$HOME/.rhino/updates/nala" ]]; then
+  sudo apt install nala -y
+  : > "$HOME/.rhino/updates/nala"
+fi
+
 # Install latest rhino-config utility
 mkdir ~/rhino-config
 cd ~/rhino-config
@@ -93,7 +99,7 @@ if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
 fi
 
 # Perform full system upgrade.
-{ sudo apt update 2> /dev/null; sudo apt dist-upgrade 2> /dev/null; }
+sudo nala upgrade
 
 # Install/Fix system files such as /etc/os-release
 cd ~
