@@ -30,6 +30,12 @@ if [[ ! -f "/usr/share/rhino/updates/config-v2" ]]; then
   : > "/usr/share/rhino/updates/config-v2"
 fi
 
+# Check to see whether Nala is installed.
+if [[ ! -f "$HOME/.rhino/updates/nala" ]]; then
+  sudo apt install nala -y
+  : > "$HOME/.rhino/updates/nala"
+fi
+
 # Install latest rhino-config utility
 mkdir /usr/share/rhino/rhino-config
 cd /usr/share/rhino/rhino-config
@@ -45,32 +51,45 @@ wget -q --show-progress --progress=bar:force https://github.com/rollingrhinoremi
 chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
 
-# If the user has selected the option to install the mainline kernel, install it onto the system.
-if [[ -f "/usr/share/rhino/config/mainline" ]] && [[ ! -f "/usr/share/rhino/config/5-18-0" ]]; then
-    cd /usr/share/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/CHECKSUMS
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-headers-5.18.2-051802-generic_5.18.2-051802.202206060740_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-headers-5.18.2-051802_5.18.2-051802.202206060740_all.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-image-unsigned-5.18.2-051802-generic_5.18.2-051802.202206060740_amd64.deb
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.2/amd64/linux-modules-5.18.2-051802-generic_5.18.2-051802.202206060740_amd64.deb
+# Automatically install the latest Linux kernel onto the system if it has not been installed already.
+if [[ ! -f "/usr/share/.rhino/config/5-18-3" ]]; then
+    cd ~/rhinoupdate/kernel/
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.3/amd64/CHECKSUMS &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.3/amd64/linux-headers-5.18.3-051803-generic_5.18.3-051803.202206090934_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.3/amd64/linux-headers-5.18.3-051803_5.18.3-051803.202206090934_all.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.3/amd64/linux-image-unsigned-5.18.3-051803-generic_5.18.3-051803.202206090934_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.3/amd64/linux-modules-5.18.3-051803-generic_5.18.3-051803.202206090934_amd64.deb &
+    wait
     
     echo "Verifying checksums..."
     if shasum --check --ignore-missing CHECKSUMS; then
       sudo apt install ./*.deb
-      : > "/usr/share/rhino/config/5-18-0"
-      : > "/usr/share/rhino/config/5-18-2"
+      : > "/usr/share/.rhino/config/5-18-3"
     else
       >&2 echo "Failed to verify checksums of downloaded kernel files!"
       exit 1
     fi
 fi
 
-# If snapd is installed.
+# If the user has enabled the xanmod kernel via rhino-config, install it.
+if [[ -f "$HOME/.rhino/config/xanmod" ]]; then
+    echo 'deb http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-kernel.list
+    wget -qO - https://dl.xanmod.org/gpg.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/xanmod-kernel.gpg add -
+    sudo apt update && sudo apt install linux-xanmod
+fi
+
+# If the user has enabled the liq kernel via rhino-config, install it.
+if [[ -f "$HOME/.rhino/config/liquorix" ]]; then
+   sudo add-apt-repository ppa:damentz/liquorix && sudo apt-get update
+   sudo apt install linux-image-liquorix-amd64 linux-headers-liquorix-amd64
+fi
+
+# If snapd is installed, update apps.
 if [[ -f "/usr/bin/snap" ]]; then
   sudo snap refresh
 fi
 
-# If flatpak is installed
+# If flatpak is installed, update apps.
 if [[ -f "/usr/bin/flatpak" ]]; then
   flatpak update
 fi
@@ -88,7 +107,7 @@ if [[ -f "/usr/share/rhino/config/pacstall" ]]; then
 fi
 
 # Perform full system upgrade.
-{ sudo apt update 2> /dev/null; sudo apt dist-upgrade 2> /dev/null; }
+sudo nala upgrade
 
 # Install/Fix system files such as /etc/os-release
 cd /usr/share/rhino
