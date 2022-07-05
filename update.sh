@@ -1,5 +1,6 @@
 #!/bin/bash
-# Created by Billy G & MrBeeBenson
+# Created by Billy G & Chadano
+# Maintined by Rolling Rhino Developers
 # Created for Rhino Rolling Remix 
 
 # URLs
