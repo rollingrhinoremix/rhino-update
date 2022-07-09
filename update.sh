@@ -97,6 +97,13 @@ if [[ -f "$HOME/.rhino/config/liquorix" ]]; then
    sudo apt install linux-image-liquorix-amd64 linux-headers-liquorix-amd64
 fi
 
+if [[ -f "$HOME/.rhino/config/libre" ]]; then
+   echo "deb mirror://linux-libre.fsfla.org/pub/linux-libre/freesh/mirrors.txt freesh main " | sudo tee --append /etc/apt/sources.list
+   wget -O - https://jxself.org/gpg.asc | sudo apt-key add -
+   sudo apt update
+   sudo apt install linux-libre
+fi
+
 # If snapd is installed, update apps.
 if [[ -f "/usr/bin/snap" ]]; then
   sudo snap refresh
