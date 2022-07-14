@@ -78,14 +78,10 @@ if [[ -f "$HOME/.rhino/config/liquorix" ]]; then
 fi
 
 # If snapd is installed, update apps.
-if [[ -f "/usr/bin/snap" ]]; then
-  sudo snap refresh
-fi
+type -P snap &>/dev/null && sudo snap refresh
 
 # If flatpak is installed, update apps.
-if [[ -f "/usr/bin/flatpak" ]]; then
-  flatpak update
-fi
+type -P flatpak &> /dev/null && flatpak update
 
 # If Pacstall has been enabled
 if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
