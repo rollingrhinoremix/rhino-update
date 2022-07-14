@@ -49,7 +49,7 @@ if [[ ! -f "$HOME/.rhino/config/5-18-11" ]]; then
     cd ~/rhinoupdate/kernel/
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/CHECKSUMS &
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-headers-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
-    wget -q --show-progress --progress=bar:force hhttps://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-headers-5.18.11-051811_5.18.11-051811.202207121541_all.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-headers-5.18.11-051811_5.18.11-051811.202207121541_all.deb &
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-image-unsigned-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-modules-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
     wait
