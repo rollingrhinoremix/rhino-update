@@ -111,6 +111,7 @@ cd /usr/share/rhino
 mkdir /usr/share/rhino/rhinoupdate/system-files/
 git clone https://github.com/rollingrhinoremix/assets /usr/share/rhino/rhinoupdate/system-files/
 sudo mv /usr/share/rhino/rhinoupdate/system-files/os-release /usr/lib/
+chmod -R 775 /usr/share/rhino # In case this was ran with root - for regular users
 
 # Allow the user to know that the upgrade has completed.
 echo "---
