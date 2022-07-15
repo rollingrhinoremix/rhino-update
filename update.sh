@@ -32,9 +32,9 @@ if [[ ! -f "/usr/share/rhino/updates/config-v2" ]]; then
 fi
 
 # Check to see whether Nala is installed.
-if [[ ! -f "$HOME/.rhino/updates/nala" ]]; then
+if [[ ! -f "/usr/share/rhino/updates/nala" ]]; then
   sudo apt install nala -y
-  : > "$HOME/.rhino/updates/nala"
+  : > "/usr/share/rhino/updates/nala"
 fi
 
 # Install latest rhino-config utility
@@ -53,7 +53,7 @@ chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
 
 # Automatically install the latest Linux kernel onto the system if it has not been installed already.
-if [[ ! -f "/usr/share/.rhino/config/5-18-11" ]]; then
+if [[ ! -f "/usr/share/rhino/config/5-18-11" ]]; then
     cd ~/rhinoupdate/kernel/
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/CHECKSUMS &
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-headers-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
@@ -65,7 +65,7 @@ if [[ ! -f "/usr/share/.rhino/config/5-18-11" ]]; then
     echo "Verifying checksums..."
     if shasum --check --ignore-missing CHECKSUMS; then
       sudo apt install ./*.deb
-      : > "/usr/share/.rhino/config/5-18-11"
+      : > "/usr/share/rhino/config/5-18-11"
     else
       >&2 echo "Failed to verify checksums of downloaded kernel files!"
       exit 1
@@ -73,14 +73,14 @@ if [[ ! -f "/usr/share/.rhino/config/5-18-11" ]]; then
 fi
 
 # If the user has enabled the xanmod kernel via rhino-config, install it.
-if [[ -f "$HOME/.rhino/config/xanmod" ]]; then
+if [[ -f "/usr/share/rhino/config/xanmod" ]]; then
     echo 'deb http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-kernel.list
     wget -qO - https://dl.xanmod.org/gpg.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/xanmod-kernel.gpg add -
     sudo apt update && sudo apt install linux-xanmod
 fi
 
 # If the user has enabled the liq kernel via rhino-config, install it.
-if [[ -f "$HOME/.rhino/config/liquorix" ]]; then
+if [[ -f "/usr/share/rhino/config/liquorix" ]]; then
    sudo add-apt-repository ppa:damentz/liquorix && sudo apt-get update
    sudo apt install linux-image-liquorix-amd64 linux-headers-liquorix-amd64
 fi
