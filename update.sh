@@ -1,5 +1,6 @@
 #!/bin/bash
-# Created by Billy G & MrBeeBenson
+# Created by Billy G & Chadano
+# Maintined by Rolling Rhino Developers
 # Created for Rhino Rolling Remix 
 
 # URLs
@@ -52,19 +53,19 @@ chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
 
 # Automatically install the latest Linux kernel onto the system if it has not been installed already.
-if [[ ! -f "/usr/share/.rhino/config/5-18-3" ]]; then
+if [[ ! -f "/usr/share/.rhino/config/5-18-11" ]]; then
     cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.3/amd64/CHECKSUMS &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.3/amd64/linux-headers-5.18.3-051803-generic_5.18.3-051803.202206090934_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.3/amd64/linux-headers-5.18.3-051803_5.18.3-051803.202206090934_all.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.3/amd64/linux-image-unsigned-5.18.3-051803-generic_5.18.3-051803.202206090934_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.3/amd64/linux-modules-5.18.3-051803-generic_5.18.3-051803.202206090934_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/CHECKSUMS &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-headers-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-headers-5.18.11-051811_5.18.11-051811.202207121541_all.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-image-unsigned-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-modules-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
     wait
     
     echo "Verifying checksums..."
     if shasum --check --ignore-missing CHECKSUMS; then
       sudo apt install ./*.deb
-      : > "/usr/share/.rhino/config/5-18-3"
+      : > "/usr/share/.rhino/config/5-18-11"
     else
       >&2 echo "Failed to verify checksums of downloaded kernel files!"
       exit 1
@@ -85,14 +86,10 @@ if [[ -f "$HOME/.rhino/config/liquorix" ]]; then
 fi
 
 # If snapd is installed, update apps.
-if [[ -f "/usr/bin/snap" ]]; then
-  sudo snap refresh
-fi
+type -P snap &>/dev/null && sudo snap refresh
 
 # If flatpak is installed, update apps.
-if [[ -f "/usr/bin/flatpak" ]]; then
-  flatpak update
-fi
+type -P flatpak &> /dev/null && flatpak update
 
 # If Pacstall has been enabled
 if [[ -f "/usr/share/rhino/config/pacstall" ]]; then
