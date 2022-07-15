@@ -9,9 +9,9 @@
 set -e
 
 # Check whether there is a newer version of this script
-cd /usr/rhino/rhino-updater
-if /usr/bin/git pull; then
-    chmod +x /usr/rhino/rhino-updater/update.sh
+cd /usr/share/rhino/rhino-update
+if git pull; then
+    chmod +x /usr/share/rhino/rhino-update/update.sh
     exec /usr/bin/rhino-update
     exit $?
 fi
