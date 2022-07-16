@@ -11,11 +11,11 @@ set -e
 CACHE_PATH="/var/cache/apt/archives"
 
 PACSTALL_VERSION="1.7.3"
-KERNEL_VERSION="5.18.11"
-KERNEL_DEBS="linux-headers-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb"
-KERNEL_DEBS="$KERNEL_DEBS linux-headers-5.18.11-051811_5.18.11-051811.202207121541_all.deb"
-KERNEL_DEBS="$KERNEL_DEBS linux-image-unsigned-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb"
-KERNEL_DEBS="$KERNEL_DEBS linux-modules-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb"
+KERNEL_VERSION="5.18.12"
+KERNEL_DEBS="linux-headers-5.18.12-051812-generic_5.18.12-051812.202207150942_amd64.deb"
+KERNEL_DEBS="$KERNEL_DEBS linux-headers-5.18.12-051812_5.18.12-051812.202207150942_all.deb"
+KERNEL_DEBS="$KERNEL_DEBS linux-image-unsigned-5.18.12-051812-generic_5.18.12-051812.202207150942_amd64.deb"
+KERNEL_DEBS="$KERNEL_DEBS linux-modules-5.18.12-051812-generic_5.18.12-051812.202207150942_amd64.deb"
 
 # Check to see whether the "configuration update", released in 2022.04.19 has been applied.
 if [[ ! -f "$HOME/.rhino/updates/configuration" ]]; then
