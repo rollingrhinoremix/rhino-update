@@ -45,19 +45,19 @@ chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
 
 # Automatically install the latest Linux kernel onto the system if it has not been installed already.
-if [[ ! -f "$HOME/.rhino/config/5-18-11" ]]; then
+if [[ ! -f "$HOME/.rhino/config/5-18-12" ]]; then
     cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/CHECKSUMS &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-headers-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-headers-5.18.11-051811_5.18.11-051811.202207121541_all.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-image-unsigned-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-modules-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.12/amd64/CHECKSUMS &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.12/amd64/linux-headers-5.18.12-051812-generic_5.18.12-051812.202207150942_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.12/amd64/linux-headers-5.18.12-051812_5.18.12-051812.202207150942_all.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.12/amd64/linux-image-unsigned-5.18.12-051812-generic_5.18.12-051812.202207150942_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.12/amd64/linux-modules-5.18.12-051812-generic_5.18.12-051812.202207150942_amd64.deb &
     wait
     
     echo "Verifying checksums..."
     if shasum --check --ignore-missing CHECKSUMS; then
       sudo apt install ./*.deb
-      : > "$HOME/.rhino/config/5-18-11"
+      : > "$HOME/.rhino/config/5-18-12"
     else
       >&2 echo "Failed to verify checksums of downloaded kernel files!"
       exit 1
