@@ -64,17 +64,44 @@ if [[ ! -f "$HOME/.rhino/config/5-18-12" ]]; then
     fi
 fi
 
-# If the user has enabled the xanmod kernel via rhino-config, install it.
-if [[ -f "$HOME/.rhino/config/xanmod" ]]; then
+# If the user has enabled a xanmod kernel variant via rhino-config, install it.
+xanmod_variants=$(compgen -G "$HOME/.rhino/config/xanmod-*")
+if $xanmod_variants; then
     echo 'deb http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-kernel.list
     wget -qO - https://dl.xanmod.org/gpg.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/xanmod-kernel.gpg add -
-    sudo apt update && sudo apt install linux-xanmod
+    sudo apt update
+    
+    for variant in $xanmod_variants; do
+    	case $variant in
+    		stable)
+    			sudo apt install linux-xanmod
+    		;;
+    		realtime)
+    			sudo apt install linux-xanmod-rt
+    		;;
+    		realtime_edge)
+    			sudo apt install linux-xanmod-rt-edge
+    		;;
+    		tasktype)
+    			sudo apt install linux-xanmod-tt
+    		;;
+    		*)
+    			sudo apt install linux-$variant
+    		;;
+    	esac
 fi
 
 # If the user has enabled the liq kernel via rhino-config, install it.
 if [[ -f "$HOME/.rhino/config/liquorix" ]]; then
    sudo add-apt-repository ppa:damentz/liquorix && sudo apt-get update
    sudo apt install linux-image-liquorix-amd64 linux-headers-liquorix-amd64
+fi
+
+if [[ -f "$HOME/.rhino/config/libre" ]]; then
+   echo "deb mirror://linux-libre.fsfla.org/pub/linux-libre/freesh/mirrors.txt freesh main " | sudo tee --append /etc/apt/sources.list
+   wget -O - https://jxself.org/gpg.asc | sudo apt-key add -
+   sudo apt update
+   sudo apt install linux-libre
 fi
 
 # If snapd is installed, update apps.
