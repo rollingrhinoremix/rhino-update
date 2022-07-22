@@ -47,11 +47,11 @@ sudo mv rhino-deinst /usr/bin
 # Automatically install the latest Linux kernel onto the system if it has not been installed already.
 if [[ ! -f "$HOME/.rhino/config/5-18-12" ]]; then
     cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.12/amd64/CHECKSUMS &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.12/amd64/linux-headers-5.18.12-051812-generic_5.18.12-051812.202207150942_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.12/amd64/linux-headers-5.18.12-051812_5.18.12-051812.202207150942_all.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.12/amd64/linux-image-unsigned-5.18.12-051812-generic_5.18.12-051812.202207150942_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.12/amd64/linux-modules-5.18.12-051812-generic_5.18.12-051812.202207150942_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.13/amd64/CHECKSUMS &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.13/amd64/linux-headers-5.18.13-051813-generic_5.18.13-051813.202207220940_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.13/amd64/linux-headers-5.18.13-051813_5.18.13-051813.202207220940_all.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.13/amd64/linux-image-unsigned-5.18.13-051813-generic_5.18.13-051813.202207220940_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.13/amd64/linux-modules-5.18.13-051813-generic_5.18.13-051813.202207220940_amd64.deb &
     wait
     
     echo "Verifying checksums..."
