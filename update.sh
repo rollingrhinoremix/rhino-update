@@ -89,6 +89,7 @@ if $xanmod_variants; then
     			sudo apt install linux-$variant
     		;;
     	esac
+    done
 fi
 
 # If the user has enabled the liq kernel via rhino-config, install it.
@@ -105,10 +106,10 @@ if [[ -f "$HOME/.rhino/config/libre" ]]; then
 fi
 
 # If snapd is installed, update apps.
-# type -P snap &>/dev/null && sudo snap refresh
+type -P snap &>/dev/null && sudo snap refresh
 
 # If flatpak is installed, update apps.
-# type -P flatpak &> /dev/null && flatpak update
+type -P flatpak &> /dev/null && flatpak update
 
 # If Pacstall has been enabled
 if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
@@ -123,7 +124,7 @@ if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
 fi
 
 # Perform full system upgrade.
-sudo nala upgrade
+sudo nala upgrade || { sudo apt-get update && sudo apt-get upgrade; }
 
 # Install/Fix system files such as /etc/os-release
 cd ~
