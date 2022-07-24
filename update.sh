@@ -6,7 +6,7 @@
 # URLs
 # https://rollingrhino.org
 
-set -e
+set -ex
 
 # Check to see whether the "configuration update", released in 2022.04.19 has been applied.
 if [[ ! -f "$HOME/.rhino/updates/configuration" ]]; then
