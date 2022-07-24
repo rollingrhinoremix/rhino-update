@@ -86,7 +86,7 @@ if $xanmod_variants; then
     			sudo apt install linux-xanmod-tt
     		;;
     		*)
-    			sudo apt install linux-$variant
+    			sudo apt install "linux-$variant"
     		;;
     	esac
     done
