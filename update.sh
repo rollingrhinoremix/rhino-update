@@ -6,7 +6,7 @@
 # URLs
 # https://rollingrhino.org
 
-set -ex
+set -e
 
 # Check to see whether the "configuration update", released in 2022.04.19 has been applied.
 if [[ ! -f "$HOME/.rhino/updates/configuration" ]]; then
@@ -64,33 +64,35 @@ if [[ ! -f "$HOME/.rhino/config/5-18-13" ]]; then
     fi
 fi
 
+# COMMENTED OUT FOR BUG FIXING
+
 # If the user has enabled a xanmod kernel variant via rhino-config, install it.
-xanmod_variants=$(compgen -G "$HOME/.rhino/config/xanmod-*")
-if $xanmod_variants; then
-    echo 'deb http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-kernel.list
-    wget -qO - https://dl.xanmod.org/gpg.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/xanmod-kernel.gpg add -
-    sudo apt update
-    
-    for variant in $xanmod_variants; do
-    	case $variant in
-    		stable)
-    			sudo apt install linux-xanmod
-    		;;
-    		realtime)
-    			sudo apt install linux-xanmod-rt
-    		;;
-    		realtime_edge)
-    			sudo apt install linux-xanmod-rt-edge
-    		;;
-    		tasktype)
-    			sudo apt install linux-xanmod-tt
-    		;;
-    		*)
-    			sudo apt install "linux-$variant"
-    		;;
-    	esac
-    done
-fi
+#xanmod_variants=$(compgen -G "$HOME/.rhino/config/xanmod-*")
+#if $xanmod_variants; then
+#    echo 'deb http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-kernel.list
+#    wget -qO - https://dl.xanmod.org/gpg.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/xanmod-kernel.gpg add -
+#    sudo apt update
+#    
+#    for variant in $xanmod_variants; do
+#    	case $variant in
+#    		stable)
+#    			sudo apt install linux-xanmod
+#    		;;
+#    		realtime)
+#    			sudo apt install linux-xanmod-rt
+#    		;;
+#    		realtime_edge)
+#    			sudo apt install linux-xanmod-rt-edge
+#    		;;
+#    		tasktype)
+#    			sudo apt install linux-xanmod-tt
+#    		;;
+#    		*)
+#    			sudo apt install "linux-$variant"
+#    		;;
+#    	esac
+#    done
+#fi
 
 # If the user has enabled the liq kernel via rhino-config, install it.
 if [[ -f "$HOME/.rhino/config/liquorix" ]]; then
