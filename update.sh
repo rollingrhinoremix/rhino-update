@@ -45,7 +45,7 @@ chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
 
 # Automatically install the latest Linux kernel onto the system if it has not been installed already.
-if [[ ! -f "$HOME/.rhino/config/5-18-15" ]]; then
+if [[ ! -f "$HOME/.rhino/config/5-19-0" ]]; then
     cd ~/rhinoupdate/kernel/
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19/amd64/CHECKSUMS &
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19/amd64/linux-headers-5.19.0-051900-generic_5.19.0-051900.202207312230_amd64.deb &
