@@ -118,7 +118,7 @@ if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
   # Install Pacstall
   mkdir -p ~/rhinoupdate/pacstall/
   cd ~/rhinoupdate/pacstall/
-  wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
+  wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/2.0.1/pacstall-2.0.1.deb
   sudo apt install ./*.deb
   if [[ ! $EUID -eq 0 ]]; then
     pacstall -Up
