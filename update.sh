@@ -17,13 +17,6 @@ elif [ "$(git rev-parse @)" = "$(git merge-base @ main)" ]; then
     exit 0
 fi
 
-# Check to see whether the "configuration update", released in 2022.04.19 has been applied.
-if [[ ! -f "/usr/share/rhino/updates/configuration" ]]; then
-  mkdir -p /usr/share/rhino/{config,updates}
-  echo "alias rhino-config='mkdir /usr/share/rhino/config/config-script && git clone https://github.com/rollingrhinoremix/rhino-config /usr/share/rhino/config/config-script/ && python3 /usr/share/rhino/config/config-script/config.py && rm -rf /usr/share/rhino/config/config-script'" >> ~/.bashrc
-  : > "/usr/share/rhino/updates/configuration"
-fi
-
 # Check to see whether Nala is installed.
 if [[ ! -f "/usr/share/rhino/updates/nala" ]]; then
   sudo apt install nala -y
