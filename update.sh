@@ -24,14 +24,6 @@ if [[ ! -f "/usr/share/rhino/updates/configuration" ]]; then
   : > "/usr/share/rhino/updates/configuration"
 fi
 
-# Check to see whether the rhino-config v2 update has been applied, which converts Rhino into a command-line utility.
-if [[ ! -f "/usr/share/rhino/updates/config-v2" ]]; then
-  mkdir /usr/share/rhino/rhinoupdate/distro
-  git clone https://github.com/rollingrhinoremix/distro /usr/share/rhino/rhinoupdate/distro
-  mv /usr/share/rhino/rhinoupdate/distro/.{bashrc,bash_aliases} ~
-  : > "/usr/share/rhino/updates/config-v2"
-fi
-
 # Check to see whether Nala is installed.
 if [[ ! -f "/usr/share/rhino/updates/nala" ]]; then
   sudo apt install nala -y
