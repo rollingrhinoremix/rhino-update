@@ -53,36 +53,66 @@ chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
 
 # Automatically install the latest Linux kernel onto the system if it has not been installed already.
-if [[ ! -f "/usr/share/rhino/config/5-18-11" ]]; then
+if [[ ! -f "/usr/share/rhino/config/5-19-0" ]]; then
     cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/CHECKSUMS &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-headers-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-headers-5.18.11-051811_5.18.11-051811.202207121541_all.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-image-unsigned-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.18.11/amd64/linux-modules-5.18.11-051811-generic_5.18.11-051811.202207121541_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19/amd64/CHECKSUMS &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19/amd64/linux-headers-5.19.0-051900-generic_5.19.0-051900.202207312230_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19/amd64/linux-headers-5.19.0-051900_5.19.0-051900.202207312230_all.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19/amd64/linux-image-unsigned-5.19.0-051900-generic_5.19.0-051900.202207312230_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19/amd64/linux-modules-5.19.0-051900-generic_5.19.0-051900.202207312230_amd64.deb &
     wait
     
     echo "Verifying checksums..."
     if shasum --check --ignore-missing CHECKSUMS; then
       sudo apt install ./*.deb
-      : > "/usr/share/rhino/config/5-18-11"
+      : > "/usr/share/rhino/config/5-19-0"
     else
       >&2 echo "Failed to verify checksums of downloaded kernel files!"
       exit 1
     fi
 fi
 
-# If the user has enabled the xanmod kernel via rhino-config, install it.
-if [[ -f "/usr/share/rhino/config/xanmod" ]]; then
-    echo 'deb http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-kernel.list
-    wget -qO - https://dl.xanmod.org/gpg.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/xanmod-kernel.gpg add -
-    sudo apt update && sudo apt install linux-xanmod
-fi
+# COMMENTED OUT FOR BUG FIXING
+
+# If the user has enabled a xanmod kernel variant via rhino-config, install it.
+#xanmod_variants=$(compgen -G "/usr/share/rhino/config/xanmod-*")
+#if $xanmod_variants; then
+#    echo 'deb http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-kernel.list
+#    wget -qO - https://dl.xanmod.org/gpg.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/xanmod-kernel.gpg add -
+#    sudo apt update
+#    
+#    for variant in $xanmod_variants; do
+#    	case $variant in
+#    		stable)
+#    			sudo apt install linux-xanmod
+#    		;;
+#    		realtime)
+#    			sudo apt install linux-xanmod-rt
+#    		;;
+#    		realtime_edge)
+#    			sudo apt install linux-xanmod-rt-edge
+#    		;;
+#    		tasktype)
+#    			sudo apt install linux-xanmod-tt
+#    		;;
+#    		*)
+#    			sudo apt install "linux-$variant"
+#    		;;
+#    	esac
+#    done
+#fi
 
 # If the user has enabled the liq kernel via rhino-config, install it.
 if [[ -f "/usr/share/rhino/config/liquorix" ]]; then
    sudo add-apt-repository ppa:damentz/liquorix && sudo apt-get update
    sudo apt install linux-image-liquorix-amd64 linux-headers-liquorix-amd64
+fi
+
+if [[ -f "$HOME/.rhino/config/libre" ]]; then
+   echo "deb mirror://linux-libre.fsfla.org/pub/linux-libre/freesh/mirrors.txt freesh main " | sudo tee --append /etc/apt/sources.list
+   wget -O - https://jxself.org/gpg.asc | sudo apt-key add -
+   sudo apt update
+   sudo apt install linux-libre
 fi
 
 # If snapd is installed, update apps.
@@ -96,7 +126,7 @@ if [[ -f "/usr/share/rhino/config/pacstall" ]]; then
   # Install Pacstall
   mkdir -p /usr/share/rhino/rhinoupdate/pacstall/
   cd /usr/share/rhino/rhinoupdate/pacstall/
-  wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/1.7.3/pacstall-1.7.3.deb
+  wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/2.0.1/pacstall-2.0.1.deb
   sudo apt install ./*.deb
   if [[ ! $EUID -eq 0 ]]; then
     pacstall -Up
@@ -104,7 +134,7 @@ if [[ -f "/usr/share/rhino/config/pacstall" ]]; then
 fi
 
 # Perform full system upgrade.
-sudo nala upgrade
+sudo nala upgrade || { sudo apt-get update && sudo apt-get upgrade; }
 
 # Install/Fix system files such as /etc/os-release
 cd /usr/share/rhino
