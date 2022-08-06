@@ -8,12 +8,13 @@
 
 set -e
 
-# Check whether there is a newer version of this script
-cd /usr/share/rhino/rhino-update
-if git pull; then
+if [ "$(git rev-parse @)" = "$(git rev-parse main)" ]; then
+    true
+elif [ "$(git rev-parse @)" = "$(git merge-base @ main)" ]; then
+    git pull
     chmod +x /usr/share/rhino/rhino-update/update.sh
-    exec /usr/bin/rhino-update
-    exit $?
+    exec /usr/bin/rhino-update &
+    exit 0
 fi
 
 # Check to see whether the "configuration update", released in 2022.04.19 has been applied.
