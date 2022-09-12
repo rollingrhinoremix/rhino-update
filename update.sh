@@ -8,6 +8,15 @@
 
 set -e
 
+CACHE_PATH="/var/cache/apt/archives"
+
+PACSTALL_VERSION="2.0.1"
+KERNEL_VERSION="5.19.5"
+KERNEL_DEBS="linux-headers-5.19.5-051905-generic_5.19.5-051905.202208291036_amd64.deb"
+KERNEL_DEBS="$KERNEL_DEBS linux-headers-5.19.5-051905_5.19.5-051905.202208291036_all.deb"
+KERNEL_DEBS="$KERNEL_DEBS linux-image-unsigned-5.19.5-051905-generic_5.19.5-051905.202208291036_amd64.deb"
+KERNEL_DEBS="$KERNEL_DEBS linux-modules-5.19.5-051905-generic_5.19.5-051905.202208291036_amd64.deb"
+
 # Check to see whether the "configuration update", released in 2022.04.19 has been applied.
 if [[ ! -f "$HOME/.rhino/updates/configuration" ]]; then
   mkdir -p ~/.rhino/{config,updates}
@@ -45,21 +54,39 @@ chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
 
 # Automatically install the latest Linux kernel onto the system if it has not been installed already. Also ensures that the system is running a pure Linux installation and not RRR installed within WSL.
-if [[ ! -f "$HOME/.rhino/config/5-19-5" ]] && [[ ! -f "$HOME/.rhino/config/wsl-yes" ]]; then
-    cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.5/amd64/CHECKSUMS &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.5/amd64/linux-headers-5.19.5-051905-generic_5.19.5-051905.202208291036_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.5/amd64/linux-headers-5.19.5-051905_5.19.5-051905.202208291036_all.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.5/amd64/linux-image-unsigned-5.19.5-051905-generic_5.19.5-051905.202208291036_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.5/amd64/linux-modules-5.19.5-051905-generic_5.19.5-051905.202208291036_amd64.deb &
+if [[ ! -f "$HOME/.rhino/config/$(echo $KERNEL_VERSION | sed s/'\.'/'-'/g)" ]] && [[ ! -f "$HOME/.rhino/config/wsl-yes" ]]; then
+    cd "$CACHE_PATH"
+    checksum_path="$HOME/.rhino/config/${KERNEL_VERSION}-CHECKSUMS"
+
+    # Always fetch the checksums
+    wget -q --show-progress --progress=bar:force -O "$checksum_path" https://kernel.ubuntu.com/~kernel-ppa/mainline/v$KERNEL_VERSION/amd64/CHECKSUMS &
+
+    # Fetch only missing files
+    for kdeb in $KERNEL_DEBS; do
+      if ! [[ -f $kdeb ]]; then
+        url="https://kernel.ubuntu.com/~kernel-ppa/mainline/v$KERNEL_VERSION/amd64/$kdeb"
+        sudo wget -q --show-progress --progress=bar:force -O "partial/$kdeb" "$url" &
+      fi
+    done
     wait
-    
+
+    # Move fetched files and remember fully qualified paths
+    full_kdebs=""
+    for kdeb in $KERNEL_DEBS; do
+      full_kdebs="$full_kdebs $CACHE_PATH/$kdeb"
+      # sudo required because the partial directory is only accessible by root
+      if ( sudo test -f "partial/$kdeb" ); then
+        sudo mv "partial/$kdeb" .
+      fi
+    done
+
     echo "Verifying checksums..."
-    if shasum --check --ignore-missing CHECKSUMS; then
-      sudo apt install ./*.deb
-      : > "$HOME/.rhino/config/5-19-5"
+    if shasum --check --ignore-missing "$checksum_path"; then
+      sudo apt install $full_kdebs
+      : > "$HOME/.rhino/config/$(echo $KERNEL_VERSION | sed s/'\.'/'-'/g)"
     else
       >&2 echo "Failed to verify checksums of downloaded kernel files!"
+      sudo rm -f $KERNEL_DEBS
       exit 1
     fi
 fi
@@ -118,7 +145,8 @@ if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
   # Install Pacstall
   mkdir -p ~/rhinoupdate/pacstall/
   cd ~/rhinoupdate/pacstall/
-  wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/2.0.1/pacstall-2.0.1.deb
+  url="https://github.com/pacstall/pacstall/releases/download/${PACSTALL_VERSION}/pacstall-${PACSTALL_VERSION}.deb"
+  wget -q --show-progress --progress=bar:force "$url"
   sudo apt install ./*.deb
   if [[ ! $EUID -eq 0 ]]; then
     pacstall -Up
