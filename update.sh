@@ -47,11 +47,11 @@ sudo mv rhino-deinst /usr/bin
 # Automatically install the latest Linux kernel onto the system if it has not been installed already. Also ensures that the system is running a pure Linux installation and not RRR installed within WSL.
 if [[ ! -f "$HOME/.rhino/config/5-19-5" ]] && [[ ! -f "$HOME/.rhino/config/wsl-yes" ]]; then
     cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.5/amd64/CHECKSUMS &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.5/amd64/linux-headers-5.19.5-051905-generic_5.19.5-051905.202208291036_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.5/amd64/linux-headers-5.19.5-051905_5.19.5-051905.202208291036_all.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.5/amd64/linux-image-unsigned-5.19.5-051905-generic_5.19.5-051905.202208291036_amd64.deb &
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.5/amd64/linux-modules-5.19.5-051905-generic_5.19.5-051905.202208291036_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.11/amd64/CHECKSUMS &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.11/amd64/linux-headers-5.19.11-051911-generic_5.19.11-051911.202209231341_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.11/amd64/linux-headers-5.19.11-051911_5.19.11-051911.202209231341_all.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.11/amd64/linux-image-unsigned-5.19.11-051911-generic_5.19.11-051911.202209231341_amd64.deb &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.11/amd64/linux-modules-5.19.11-051911-generic_5.19.11-051911.202209231341_amd64.deb &
     wait
     
     echo "Verifying checksums..."
@@ -114,16 +114,16 @@ type -P snap &>/dev/null && sudo snap refresh
 type -P flatpak &> /dev/null && flatpak update
 
 # If Pacstall has been enabled
-if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
+#if [[ -f "$HOME/.rhino/config/pacstall" ]]; then
   # Install Pacstall
-  mkdir -p ~/rhinoupdate/pacstall/
-  cd ~/rhinoupdate/pacstall/
-  wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/2.0.1/pacstall-2.0.1.deb
-  sudo apt install ./*.deb
-  if [[ ! $EUID -eq 0 ]]; then
-    pacstall -Up
-  fi
-fi
+#  mkdir -p ~/rhinoupdate/pacstall/
+#  cd ~/rhinoupdate/pacstall/
+#  wget -q --show-progress --progress=bar:force https://github.com/pacstall/pacstall/releases/download/2.0.1/pacstall-2.0.1.deb
+#  sudo apt install ./*.deb
+#  if [[ ! $EUID -eq 0 ]]; then
+#    pacstall -Up
+#  fi
+# fi
 
 # Perform full system upgrade.
 sudo nala upgrade || { sudo apt-get update && sudo apt-get upgrade; }
