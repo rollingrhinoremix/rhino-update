@@ -64,35 +64,34 @@ if [[ ! -f "$HOME/.rhino/config/5-19-5" ]] && [[ ! -f "$HOME/.rhino/config/wsl-y
     fi
 fi
 
-# COMMENTED OUT FOR BUG FIXING
+xanmod_variants=$(compgen -G "$HOME/.rhino/config/xanmod-*")
+if $xanmod_variants; then
+  echo 'deb http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-kernel.list
+  wget -qO - https://dl.xanmod.org/gpg.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/xanmod-kernel.gpg add -
+  sudo apt update
 
-# If the user has enabled a xanmod kernel variant via rhino-config, install it.
-#xanmod_variants=$(compgen -G "$HOME/.rhino/config/xanmod-*")
-#if $xanmod_variants; then
-#    echo 'deb http://deb.xanmod.org releases main' | sudo tee /etc/apt/sources.list.d/xanmod-kernel.list
-#    wget -qO - https://dl.xanmod.org/gpg.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/xanmod-kernel.gpg add -
-#    sudo apt update
-#    
-#    for variant in $xanmod_variants; do
-#    	case $variant in
-#    		stable)
-#    			sudo apt install linux-xanmod
-#    		;;
-#    		realtime)
-#    			sudo apt install linux-xanmod-rt
-#    		;;
-#    		realtime_edge)
-#    			sudo apt install linux-xanmod-rt-edge
-#    		;;
-#    		tasktype)
-#    			sudo apt install linux-xanmod-tt
-#    		;;
-#    		*)
-#    			sudo apt install "linux-$variant"
-#    		;;
-#    	esac
-#    done
-#fi
+  for variant in $xanmod_variants; do
+    variant=$(echo "$variant" | cut -d "-" -f 2)
+
+    case $variant in
+      stable)
+        sudo apt install linux-xanmod
+        ;;
+      realtime)
+        sudo apt install linux-xanmod-rt
+        ;;
+      realtime_edge)
+        sudo apt install linux-xanmod-rt-edge
+        ;;
+      tasktype)
+        sudo apt install linux-xanmod-tt
+        ;;
+      *)
+        sudo apt install "linux-$variant"
+        ;;
+    esac
+  done
+fi
 
 # If the user has enabled the liq kernel via rhino-config, install it.
 if [[ -f "$HOME/.rhino/config/liquorix" ]]; then
