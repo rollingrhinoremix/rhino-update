@@ -45,9 +45,9 @@ chmod +x rhino-deinst
 sudo mv rhino-deinst /usr/bin
 
 # Automatically install the latest Linux kernel onto the system if it has not been installed already. Also ensures that the system is running a pure Linux installation and not RRR installed within WSL.
-if [[ ! -f "$HOME/.rhino/config/5-19-5" ]] && [[ ! -f "$HOME/.rhino/config/wsl-yes" ]]; then
+if [[ ! -f "$HOME/.rhino/config/6-0" ]] && [[ ! -f "$HOME/.rhino/config/wsl-yes" ]]; then
     cd ~/rhinoupdate/kernel/
-    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.19.11/amd64/CHECKSUMS &
+    wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.0/amd64/CHECKSUMS &
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.0/amd64/linux-headers-6.0.0-060000-generic_6.0.0-060000.202210022231_amd64.deb &
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.0/amd64/linux-headers-6.0.0-060000_6.0.0-060000.202210022231_all.deb &
     wget -q --show-progress --progress=bar:force https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.0/amd64/linux-image-unsigned-6.0.0-060000-generic_6.0.0-060000.202210022231_amd64.deb &
@@ -57,7 +57,7 @@ if [[ ! -f "$HOME/.rhino/config/5-19-5" ]] && [[ ! -f "$HOME/.rhino/config/wsl-y
     echo "Verifying checksums..."
     if shasum --check --ignore-missing CHECKSUMS; then
       sudo apt install ./*.deb
-      : > "$HOME/.rhino/config/5-19-5"
+      : > "$HOME/.rhino/config/6-0"
     else
       >&2 echo "Failed to verify checksums of downloaded kernel files!"
       exit 1
